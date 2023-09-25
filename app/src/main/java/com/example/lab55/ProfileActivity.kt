@@ -3,18 +3,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -83,7 +72,7 @@ fun ProfileContent() {
                         .size(100.dp)
                         .clip(CircleShape)
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Nombre de Usuario",
                     fontSize = 20.sp,
@@ -92,7 +81,7 @@ fun ProfileContent() {
                 )
             }
         }
-        Spacer(modifier = Modifier.weight(0.1f))
+        // Eliminamos el Spacer con el weight excesivo.
         val profileCardItems = listOf(
             ProfileCardItem("Editar perfil", R.drawable.event_image_7_background, false, false),
             ProfileCardItem("Reiniciar Contraseña", R.drawable.event_image_8_background, false, false),
@@ -102,29 +91,17 @@ fun ProfileContent() {
 
         profileCardItems.forEach { cardItem ->
             ProfileCardItem(cardItem)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 data class ProfileCardItem(
     val title: String,
     val imageResourceId: Int,
     val hasToggleButton: Boolean,
-    var isChecked: Boolean // Agregar isChecked aquí
+    var isChecked: Boolean
 )
-
-
 
 @Composable
 fun ProfileCardItem(cardItem: ProfileCardItem) {
@@ -132,20 +109,20 @@ fun ProfileCardItem(cardItem: ProfileCardItem) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 painter = painterResource(id = cardItem.imageResourceId),
                 contentDescription = "Card Image",
                 modifier = Modifier
-                    .size(20.dp)
+                    .size(16.dp)
                     .clip(shape = RoundedCornerShape(4.dp))
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(15.dp))
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -165,20 +142,15 @@ fun ProfileCardItem(cardItem: ProfileCardItem) {
     }
 }
 
-
-
 @Composable
 fun ToggleButton(isChecked: Boolean, onToggle: (Boolean) -> Unit) {
     Switch(
         checked = isChecked,
         onCheckedChange = {
-            onToggle(!isChecked) // Cambiamos el valor del estado
+            onToggle(!isChecked)
         },
         modifier = Modifier
             .background(Color.LightGray, CircleShape)
             .padding(4.dp)
     )
 }
-
-
-
